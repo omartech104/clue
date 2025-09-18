@@ -21,6 +21,7 @@ while running:
             response = requests.get(url)
             if response.status_code == 200:
                 print(response.text)
+                input("Press Enter to continue...")
             else:
                 print("Error fetching cheat sheet.")
         except Exception as e:
