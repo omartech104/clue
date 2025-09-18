@@ -14,7 +14,12 @@ while running:
         running=False
         print("This program only runs on Linux")
     
-    command = input("Enter the command you want to know about: ").lower()
+    command = input("Enter the command you want to know about [q for quiting out the app]: ").lower()
+    if command == "quit":
+        print("Goodbye!")
+        break
+    else:
+        print("Enter a valid command")
     def recive_info_command(command):
         url = f"https://cheat.sh/{command}?QT"
         try:
