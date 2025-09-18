@@ -15,3 +15,13 @@ while running:
         print("This program only runs on Linux")
     
     command = input("Enter the command you want to know about: ").lower()
+    if command:
+        url = f"https://cheat.sh/{command}?QT"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print(response.text)
+            else:
+                print("Error fetching cheat sheet.")
+        except Exception as e:
+            print(f"Request failed: {e}")
