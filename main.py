@@ -26,4 +26,8 @@ while running:
         except Exception as e:
             print(f"Request failed: {e}")
     recive_info_command(command)
-    input("Press Enter to continue...")
+    choice = input("Do you want to try the command (y/n): ").lower()
+    if choice == "y":
+        os.system(command)
+    else:
+        print("Okay, not running the command.")
