@@ -28,7 +28,7 @@ Do you want to try the command (y/n): y
 
 ## Requirements
 - Python 3
-- requests library (`pip install requests`)
+- requests library (`pip install -r reqiurements.txt`)
 - Linux operating system
 
 ## Limitations
