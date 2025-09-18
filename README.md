@@ -20,7 +20,7 @@ Clue is a command-line tool for Linux that helps users look up command usage and
 ## Example Usage
 ```
 $ python main.py
-Enter the command you want to know about: ls
+Enter the command you want to know about [q for quiting out the app]: ls
 [cheat.sh output for 'ls']
 Do you want to try the command (y/n): y
 [output of 'ls' command]
