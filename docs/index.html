@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clue — CLI helper & tool</title>
+  <meta name="description" content="Clue — a small CLI helper tool. Quick docs, install & usage. Fork and contribute on GitHub." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%C2%B7%3C/text%3E%3C/svg%3E">
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#4f46e5;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,var(--bg),#020617);color:#e6eef6}
+    .container{max-width:900px;margin:36px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:28px;box-shadow:0 6px 18px rgba(79,70,229,0.18)}
+    h1{margin:0;font-size:28px}
+    p.lead{margin:6px 0 18px;color:var(--muted)}
+
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 24px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .hero-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#06b6d4);color:white;text-decoration:none;font-weight:600}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .section-title{font-size:16px;margin:0 0 12px}
+    pre{background:var(--glass);padding:12px;border-radius:8px;overflow:auto;color:#dbeafe;font-size:13px}
+    ul.features{padding:0;margin:0;list-style:none;display:grid;gap:10px}
+    ul.features li{display:flex;gap:12px;align-items:flex-start}
+    .dot{width:12px;height:12px;border-radius:4px;background:linear-gradient(180deg,#34d399,#10b981);margin-top:6px}
+
+    footer{margin-top:28px;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Cl</div>
+      <div>
+        <h1>Clue</h1>
+        <p class="lead">A tiny CLI helper tool — quick docs, install instructions, and examples. Source on GitHub.</p>
+        <div class="hero-cta">
+          <a class="btn" href="https://github.com/omartech104/clue" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="btn ghost" href="https://github.com/omartech104/clue/archive/refs/tags/latest.zip">Install</a>
+        </div>
+      </div>
+    </header>
+
+    <main style="margin-top:22px">
+      <section class="card">
+        <h2 class="section-title">Quick overview</h2>
+        <p style="color:var(--muted);margin:0 0 12px">Clue is designed to help with <strong>command lookups</strong> and small CLI tasks. This site provides quick usage examples and contribution instructions.</p>
+
+        <h3 class="section-title">Features</h3>
+        <ul class="features">
+          <li><div class="dot"></div><div><strong>Fast lookup</strong> — lookup commands and flags.</div></li>
+          <li><div class="dot"></div><div><strong>Small footprint</strong> — pure Python / Bash friendly.</div></li>
+          <li><div class="dot"></div><div><strong>Easy to extend</strong> — add new commands in the repo.</div></li>
+        </ul>
+
+        <h3 class="section-title" style="margin-top:14px">Usage (example)</h3>
+        <pre>git clone https://github.com/omartech104/clue.git
+cd clue
+# run the tool (example)
+python clue.py --help
+</pre>
+
+        <h3 class="section-title">Install</h3>
+        <pre># clone
+git clone https://github.com/omartech104/clue.git
+# or pip (if published)
+pip install clue
+</pre>
+
+        <h3 class="section-title">How to contribute</h3>
+        <p style="color:var(--muted);margin:0 0 8px">Open issues, send pull requests, or add new command docs. Use the project's issue template and run tests locally.</p>
+
+        <h3 class="section-title">License</h3>
+        <p style="color:var(--muted);margin:0">MIT — check the repository for the full LICENSE file.</p>
+      </section>
+    </main>
+
+    <footer>
+      <div>Made for <a href="https://github.com/omartech104/clue" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">omartech104/clue</a>. Need a different design, or a React site? Tell me and I’ll create it.</div>
+    </footer>
+  </div>
+</body>
+</html>
