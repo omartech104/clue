@@ -35,6 +35,8 @@ while running:
     clear_console()
     command = input("Enter the command you want to know about [quit to exit]: ").lower()
 
+    DOC_FILE = os.path.join(DOC_DIR, f"{command}_doc.txt")
+
     if not os.path.exists(DOC_FILE):
         with open(DOC_FILE, "w", encoding="utf-8") as f:
             f.write("# Command Documentation\n\n")
