@@ -1,6 +1,7 @@
 import os
 import sys
 import requests
+import getpass
 
 running = True
 pltform = sys.platform
@@ -13,7 +14,7 @@ if os.path.exists(USER_INFO_FILE):
     with open(USER_INFO_FILE, "r", encoding="utf-8") as f:
         username_for_path = f.read().strip()
 else:
-    username_for_path = input("Enter your username: ").strip()
+    username_for_path = getpass.getuser()
     with open(USER_INFO_FILE, "w", encoding="utf-8") as f:
         f.write(username_for_path)
 
@@ -21,11 +22,13 @@ DOC_DIR = os.path.expanduser(f"/home/{username_for_path}/clue_docs")
 os.makedirs(DOC_DIR, exist_ok=True)
 DOC_FILE = os.path.join(DOC_DIR, "doc.txt")
 
+
 def clear_console():
     if pltform == "linux":
         os.system("clear")
     elif pltform == "win32":
         os.system("cls")
+
 
 while running:
     if pltform == "win32":
@@ -77,4 +80,3 @@ while running:
 
     input("Press Enter to continue...")
     clear_console()
-
