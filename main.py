@@ -1,80 +1,109 @@
 import os
 import sys
 import requests
+import shutil
 
-running = True
-pltform = sys.platform
-
-CONFIG_DIR = os.path.expanduser("~/.config/clue")
-os.makedirs(CONFIG_DIR, exist_ok=True)
-USER_INFO_FILE = os.path.join(CONFIG_DIR, "info.txt")
-
-if os.path.exists(USER_INFO_FILE):
-    with open(USER_INFO_FILE, "r", encoding="utf-8") as f:
-        username_for_path = f.read().strip()
-else:
-    username_for_path = input("Enter your username: ").strip()
-    with open(USER_INFO_FILE, "w", encoding="utf-8") as f:
-        f.write(username_for_path)
-
-DOC_DIR = os.path.expanduser(f"/home/{username_for_path}/clue_docs")
-os.makedirs(DOC_DIR, exist_ok=True)
-DOC_FILE = os.path.join(DOC_DIR, "doc.txt")
 
 def clear_console():
-    if pltform == "linux":
-        os.system("clear")
-    elif pltform == "win32":
+    """Clear the terminal screen in a cross-platform way."""
+    if os.name == "nt":
         os.system("cls")
-
-while running:
-    if pltform == "win32":
-        print("This program only runs on Linux")
-        break
-
-    clear_console()
-    command = input("Enter the command you want to know about [quit to exit]: ").lower()
-
-    DOC_FILE = os.path.join(DOC_DIR, f"{command}_doc.txt")
-
-    if not os.path.exists(DOC_FILE):
-        with open(DOC_FILE, "w", encoding="utf-8") as f:
-            f.write("# Command Documentation\n\n")
-
-    if command == "quit":
-        print("Goodbye!")
-        break
-
-    def receive_info_command(cmd):
-        url = f"https://cheat.sh/{cmd}?QT"
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                with open(DOC_FILE, "a", encoding="utf-8") as f:
-                    f.write(
-                        f"\n-----------------------------\n"
-                        f"Command: {cmd}\n"
-                        f"-----------------------------\n"
-                        f"{response.text}\n"
-                        f"-----------------------------\n"
-                    )
-                clear_console()
-                os.system(f"bat --pager='less -R +1' --style=plain {DOC_FILE}")
-            else:
-                print("Error fetching cheat sheet.")
-        except Exception as e:
-            print(f"Request failed: {e}")
-
-    receive_info_command(command)
-
-    choice = input("Do you want to try the command (y/n): ").lower()
-    if choice == "y":
-        params = input("Enter any parameters (or press Enter to skip): ")
-        full_command = f"{command} {params}".strip()
-        os.system(full_command)
     else:
-        print("Okay, not running the command.")
+        os.system("clear")
 
-    input("Press Enter to continue...")
+
+def pager_output(text):
+    """Show output via pager (less, more, or pydoc), or print if none available."""
+    try:
+        import pydoc
+
+        pydoc.pager(text)
+    except ImportError:
+        pager = shutil.which("less") or shutil.which("more")
+        if pager:
+            import subprocess
+
+            proc = subprocess.Popen([pager], stdin=subprocess.PIPE)
+            try:
+                proc.communicate(input=text.encode("utf-8"))
+            except Exception:
+                print(text)
+        else:
+            print(text)
+
+
+def fetch_cheat_sheet(cmd):
+    """Fetch a cheat sheet from cheat.sh for the given command."""
+    url = f"https://cheat.sh/{cmd}?QT"
+    try:
+        response = requests.get(url, timeout=10)
+        if response.ok and response.text.strip():
+            return response.text
+        return None
+    except Exception as e:
+        return f"Request failed: {e}"
+
+
+def command_exists(command):
+    """Check if a command exists on the user's system."""
+    return shutil.which(command) is not None
+
+
+def prompt_yes_no(prompt):
+    """Prompt the user for a yes/no answer."""
+    while True:
+        choice = input(f"{prompt} [y/n]: ").strip().lower()
+        if choice in ("y", "yes"):
+            return True
+        if choice in ("n", "no"):
+            return False
+        print("Please enter 'y' or 'n'.")
+
+
+def main():
+    if not sys.platform.startswith("linux"):
+        print("This program is designed for Linux systems.")
+        sys.exit(1)
+
     clear_console()
+    print("Welcome to Clue! Get instant help for any Linux command.\n")
 
+    while True:
+        command = input(
+            "Enter the command you want to know about (or type 'quit' to exit): "
+        ).strip()
+        if not command:
+            print("Please enter a command.")
+            continue
+        if command.lower() == "quit":
+            print("Goodbye!")
+            break
+
+        if not command_exists(command):
+            print(
+                f"\n  '{command}' does not exist on your system or is not in your PATH.\n"
+            )
+            if not prompt_yes_no("Would you like to see the cheat sheet anyway?"):
+                continue
+
+        print(f"\nFetching cheat sheet for '{command}'...\n")
+        cheat_sheet = fetch_cheat_sheet(command)
+        if cheat_sheet:
+            pager_output(cheat_sheet)
+        else:
+            print("No cheat sheet found or unable to fetch information.")
+
+        if prompt_yes_no(f"Do you want to try running '{command}' now?"):
+            params = input("Enter any parameters (or press Enter to skip): ").strip()
+            full_command = f"{command} {params}".strip()
+            print(f"\nRunning: {full_command}\n")
+            os.system(full_command)
+        else:
+            print("Okay, not running the command.")
+
+        input("\nPress Enter to continue...")
+        clear_console()
+
+
+if __name__ == "__main__":
+    main()

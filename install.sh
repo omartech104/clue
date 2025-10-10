@@ -1,8 +1,15 @@
 #!/bin/bash
+set -e 
 
-pip install -r requirements.txt --break-system-packages
+# Install dependencies (better to use user scope or venv)
+pip install --user -r requirements.txt
+
+# Build the binary
 pyinstaller --onefile --noconfirm --name "clue" main.py
-sudo mv dist/clue /usr/bin/
+
+# Move binary to /usr/local/bin
+sudo mv dist/clue /usr/local/bin/
 rm -rf build dist clue.spec
-mkdir ~/clue_docs
-echo "Clue App installed successfully! You can run it using the command 'clue'".
+mkdir -p ~/clue_docs
+
+echo "Clue App installed successfully! You can run it using the command: clue"
