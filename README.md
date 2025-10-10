@@ -44,7 +44,6 @@ Do you want to try the command (y/n): y
 - The app does not run on Windows or macOS.
 - Requires an active internet connection to fetch cheat sheets.
 - Running commands is limited to those available in the Linux shell.
-- Documentation for each command is appended to `doc.txt` in plain text format.
 
 ## License
 This project is for personal use and learning purposes.
