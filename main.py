@@ -24,8 +24,6 @@ DOC_FILE = os.path.join(DOC_DIR, "doc.txt")
 def clear_console():
     if pltform == "linux":
         os.system("clear")
-    elif pltform == "win32":
-        os.system("cls")
 
 while running:
     if pltform == "win32":
